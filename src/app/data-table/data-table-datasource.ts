@@ -3,10 +3,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { map } from 'rxjs/operators';
 import { Observable, of as observableOf, merge } from 'rxjs';
-import { ReadJSONService } from '../read-json.service';
 import { Data } from '../Data';
-import { HttpRequest } from '@angular/common/http';
-import { DataTableComponent } from './data-table.component';
 
 // TODO: Replace this with your own data model type
 export interface DataTableItem {
@@ -16,19 +13,26 @@ export interface DataTableItem {
 }
 
 // TODO: replace this with real data from your application
-//const EXAMPLE_DATA: DataTableItem[] = [];
+export class FillData{
+  static FETCHED_DATA: DataTableItem[] = [{id:1, name:"dummy", type: "dummy"}];
+  constructor(private data: Data[]){
+    FillData.FETCHED_DATA = data;
+    console.log(FillData.FETCHED_DATA);
+  }
+}
 /**
  * Data source for the DataTable view. This class should
  * encapsulate all logic for fetching and manipulating the displayed data
  * (including sorting, pagination, and filtering).
  */
 export class DataTableDataSource extends DataSource<DataTableItem> {
-  data: DataTableItem[] = [{id:1, type:'dummy', name:'dummy'}]; //need to get the data here
+  data: DataTableItem[] = FillData.FETCHED_DATA;
   paginator: MatPaginator | undefined;
   sort: MatSort | undefined;
-
+  
   constructor() {
     super();
+    console.log(this.data);
   }
   /**
    * Connect this data source to the table. The table will only update when

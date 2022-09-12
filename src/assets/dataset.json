@@ -1,5 +1,4 @@
-{
-    "dataset":[
+[
         { "id": 1001, "type": "cake", "name": "Regular" },
         { "id": 1002, "type": "cake", "name": "Chocolate" },
         { "id": 1003, "type": "cake", "name": "Blueberry" },
@@ -19,4 +18,3 @@
         { "id": 3003, "type": "donut", "name": "Chocolate" },
         { "id": 3004, "type": "donut", "name": "Maple" }
 ]
-}
