@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Data } from '../models/Data';
+import { DataTableItem } from '../models/DataTableItem.model';
 @Injectable({
   providedIn: 'root'
 })
@@ -10,8 +10,7 @@ export class ReadJSONService {
   url: string = "../assets/dataset.json";
 
   getData(){
-    const responsedata = this.http.get<Data[]>(this.url);
-    console.log(responsedata)
-    return responsedata;
+    //Observable
+    return this.http.get<DataTableItem[]>(this.url);
   }
 }

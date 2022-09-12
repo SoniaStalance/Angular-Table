@@ -2,9 +2,9 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTable } from '@angular/material/table';
-import { DataTableDataSource, DataTableItem } from './data-table-datasource';
+import { DataTableDataSource } from './data-table-datasource';
 import { ReadJSONService } from '../../services/read-json.service';
-import { Data } from 'src/app/models/Data';
+import { DataTableItem } from 'src/app/models/DataTableItem.model';
 
 @Component({
   selector: 'app-data-table',
@@ -18,18 +18,19 @@ export class DataTableComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatTable) table!: MatTable<DataTableItem>;
   dataSource: DataTableDataSource;
-  data: Data[] = [{id:1, name: 'test', type: 'test'}]
+  data: DataTableItem[] = [{id:1, name: 'test', type: 'test'}]
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['id', 'type', 'name'];
   constructor(private restService: ReadJSONService) {
-    console.log(this.data);
     this.dataSource = new DataTableDataSource();
     this.dataSource.data = this.data;
+    console.log(this.data.length);
+    console.log(this.data);
   }
 
-  ngOnInit(): void{
+  ngOnInit(){
     const dataObservable = this.restService.getData();
-      dataObservable.subscribe((dataArray: Data[]) => {
+      dataObservable.subscribe((dataArray: DataTableItem[]) => {
         for(var i = 0; i<dataArray.length; i++)
             this.data.push(dataArray[i]);
       });
