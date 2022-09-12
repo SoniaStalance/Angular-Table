@@ -3,36 +3,28 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { map } from 'rxjs/operators';
 import { Observable, of as observableOf, merge } from 'rxjs';
-import { Data } from '../Data';
+import { Data } from '../../models/Data';
 
 // TODO: Replace this with your own data model type
 export interface DataTableItem {
+  id: number;
   type: string;
   name: string;
-  id: number;
 }
 
-// TODO: replace this with real data from your application
-export class FillData{
-  static FETCHED_DATA: DataTableItem[] = [{id:1, name:"dummy", type: "dummy"}];
-  constructor(private data: Data[]){
-    FillData.FETCHED_DATA = data;
-    console.log(FillData.FETCHED_DATA);
-  }
-}
 /**
  * Data source for the DataTable view. This class should
  * encapsulate all logic for fetching and manipulating the displayed data
  * (including sorting, pagination, and filtering).
  */
-export class DataTableDataSource extends DataSource<DataTableItem> {
-  data: DataTableItem[] = FillData.FETCHED_DATA;
+export class DataTableDataSource extends DataSource<DataTableItem> { 
+  data: DataTableItem[] = [];
   paginator: MatPaginator | undefined;
   sort: MatSort | undefined;
   
+  //no params
   constructor() {
     super();
-    console.log(this.data);
   }
   /**
    * Connect this data source to the table. The table will only update when
@@ -83,6 +75,7 @@ export class DataTableDataSource extends DataSource<DataTableItem> {
     return data.sort((a, b) => {
       const isAsc = this.sort?.direction === 'asc';
       switch (this.sort?.active) {
+        case 'type': return compare(a.type, b.type, isAsc);
         case 'name': return compare(a.name, b.name, isAsc);
         case 'id': return compare(+a.id, +b.id, isAsc);
         default: return 0;
