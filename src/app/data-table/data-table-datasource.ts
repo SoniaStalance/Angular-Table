@@ -3,41 +3,33 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { map } from 'rxjs/operators';
 import { Observable, of as observableOf, merge } from 'rxjs';
+import { ReadJSONService } from '../read-json.service';
+import { Data } from '../Data';
+import { HttpRequest } from '@angular/common/http';
+import { DataTableComponent } from './data-table.component';
 
 // TODO: Replace this with your own data model type
 export interface DataTableItem {
+  type: string;
   name: string;
   id: number;
 }
 
 // TODO: replace this with real data from your application
-const EXAMPLE_DATA: DataTableItem[] = [
-  {id: 1, name: 'Hydrogen'},
-  {id: 2, name: 'Helium'},
-  {id: 3, name: 'Lithium'},
-  {id: 4, name: 'Beryllium'},
-  {id: 5, name: 'Boron'},
-  {id: 6, name: 'Carbon'},
-  {id: 7, name: 'Nitrogen'},
-  {id: 8, name: 'Oxygen'},
-  {id: 9, name: 'Fluorine'},
-  {id: 10, name: 'Neon'}
-];
-
+//const EXAMPLE_DATA: DataTableItem[] = [];
 /**
  * Data source for the DataTable view. This class should
  * encapsulate all logic for fetching and manipulating the displayed data
  * (including sorting, pagination, and filtering).
  */
 export class DataTableDataSource extends DataSource<DataTableItem> {
-  data: DataTableItem[] = EXAMPLE_DATA;
+  data: DataTableItem[] = [{id:1, type:'dummy', name:'dummy'}]; //need to get the data here
   paginator: MatPaginator | undefined;
   sort: MatSort | undefined;
 
   constructor() {
     super();
   }
-
   /**
    * Connect this data source to the table. The table will only update when
    * the returned stream emits new items.
