@@ -8,6 +8,7 @@ import { DataTableComponent } from '../app/components/data-table/data-table.comp
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 import { HttpClientModule } from '@angular/common/http';
 
@@ -17,6 +18,7 @@ import { HttpClientModule } from '@angular/common/http';
     DataTableComponent
   ],
   imports: [
+    MatToolbarModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,

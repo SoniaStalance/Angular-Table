@@ -11,12 +11,12 @@ import { DataTableItem } from 'src/app/models/DataTableItem.model';
  * (including sorting, pagination, and filtering).
  */
 export class DataTableDataSource extends DataSource<DataTableItem> { 
-  data: DataTableItem[] = [];
-  paginator: MatPaginator | undefined;
-  sort: MatSort | undefined;
+  
   
   //no params
-  constructor() {
+  constructor(public data: DataTableItem[],
+    public paginator: MatPaginator,
+    public sort: MatSort) {
     super();
   }
   /**

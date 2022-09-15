@@ -17,28 +17,27 @@ export class DataTableComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatTable) table!: MatTable<DataTableItem>;
-  dataSource: DataTableDataSource;
-  data: DataTableItem[] = [{id:1, name: 'test', type: 'test'}]
+  dataSource!: DataTableDataSource;
+  data: DataTableItem[] = [];
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['id', 'type', 'name'];
-  constructor(private restService: ReadJSONService) {
-    this.dataSource = new DataTableDataSource();
-    this.dataSource.data = this.data;
-    console.log(this.data.length);
-    console.log(this.data);
-  }
-
-  ngOnInit(){
+  
+  constructor(private restService: ReadJSONService) {  }
+  
+  ngOnInit(): void {
     const dataObservable = this.restService.getData();
-      dataObservable.subscribe((dataArray: DataTableItem[]) => {
-        for(var i = 0; i<dataArray.length; i++)
-            this.data.push(dataArray[i]);
-      });
+    dataObservable.subscribe((dataArray: DataTableItem[]) => {
+      for(var i = 0; i<dataArray.length; i++)
+      { 
+        this.data.push(dataArray[i]);
+      }
+      this.dataSource = new DataTableDataSource(this.data, this.paginator, this.sort);
+    });
   }
 
   ngAfterViewInit(): void {
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
-    this.table.dataSource = this.dataSource;
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
+      this.table.dataSource = this.dataSource;
   }
 }
